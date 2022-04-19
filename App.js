@@ -163,7 +163,6 @@ export default function App() {
     <NativeBaseProvider>
     <View style={styles.appContainer}>
       {/* <NativeBaseProvider> */}
-      <Box width="95%" height="40%" rounded="lg" p={0} style={styles.background}/>
       <View style={styles.swipeContainer}>
         <Exemple/>
       </View>
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "-60%",
+    top: "30%",
     // top: 800,
   },
   navigationBar: {
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "75%",
+    top: "165%",
     // top: 800,
   },
   background: {
