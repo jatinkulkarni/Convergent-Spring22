@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import Swiper from 'react-native-deck-swiper'
 import { Button, StyleSheet, Text, View } from 'react-native'
 
-import TopBar from './components/topbar.js'
-import Navbar from './components/navbar.js'
+import TopBar from './components/topbar.js';
+import Navbar from './components/navbar.js';
 import { Box, Center, NativeBaseProvider } from "native-base";
+// import db from './database/firebase';
+// import { doc, getDoc, setDoc, addDoc, collection, query, where } from "firebase/firestore";
 
 // demo purposes only
 function * range (start, end) {
@@ -158,7 +160,10 @@ class Exemple extends Component {
 
 
 export default function App() {
-  // console.log(usersCollection)
+
+  // const eventsdb = collection(db, 'Events');
+  // const testdoc = query(eventsdb, where('Dates' == "Every Week Day"));
+  // console.log(eventsdb);
   return (
     <NativeBaseProvider>
     <View style={styles.appContainer}>
