@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Icon, VStack, Stack } from 'native-base'
 
 
+
 export default function Cards( { information }) {
   // const [index, setIndex] = React.useState(0);
   // const onSwiped = () => {
@@ -23,8 +24,8 @@ export default function Cards( { information }) {
 
   return(
         <Swiper
-            cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
-            // cards={[information]}
+            // cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+            cards={[information]}
             renderCard={(card) => {
               console.log("In card.js", card)
                 return (
