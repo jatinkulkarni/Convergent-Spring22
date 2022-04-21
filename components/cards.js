@@ -1,18 +1,52 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from 'react-native';
-import Swiper from 'react-native-deck-swiper'
+import Swiper from 'react-native-deck-swiper';
+import { Ionicons } from '@expo/vector-icons'; 
+import { Icon, VStack, Stack } from 'native-base'
+
 
 export default function Cards( { information }) {
+  // const [index, setIndex] = React.useState(0);
+  // const onSwiped = () => {
+  //   transitionRef.current.animateNextTransition();
+  //   setIndex((index + 1) % data.length);
+  // };
+
+  const Card = ({ card, index }) => {
+    console.log("🙈🙉🙊")
     return(
+      <View style={styles.card}>
+        <Text>{card}</Text>
+      </View>
+    )
+  }
+
+  return(
         <Swiper
             cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+            // cards={[information]}
             renderCard={(card) => {
+              console.log("In card.js", card)
                 return (
                     <View style={styles.card}>
-                        <Text style={styles.text}>{card}</Text>
+                      <VStack space="2.5" mt="4" px="8">
+                        <Stack direction="row" mb="2.5" mt="1.5" space={3}>
+                          <Icon as={Ionicons} name="calendar-outline" size="10" color="red.500" />
+                          <Text>Date and Time Info</Text>
+                        </Stack>
+                        <Stack direction="row" mb="2.5" mt="1.5" space={3}>
+                          <Icon as={Ionicons} name="location-outline" size="10" color="red.500" />
+                          <Text>Location Info</Text>
+                        </Stack>
+                        <Stack direction="column" mb="2.5" mt="1.5" space={3}>
+                          <Text>About</Text>
+                          <Text>About Info</Text>
+                        </Stack>
+                      </VStack>
                     </View>
                 )
             }}
+            // renderCard={card => <Card card={card}/>}
             onSwiped={(cardIndex) => {console.log(cardIndex)}}
             onSwipedAll={() => {console.log('onSwipedAll')}}
             cardIndex={0}
@@ -103,10 +137,10 @@ const styles = StyleSheet.create({
     card: {
       flex: 1,
       borderRadius: 4,
-      width: '90%',
+      width: '100%',
     //   height: 10,
       alignSelf: 'center',
-      borderWidth: 2,
+      // borderWidth: 1,
       borderColor: '#E8E8E8',
       justifyContent: 'center',
       backgroundColor: 'white'

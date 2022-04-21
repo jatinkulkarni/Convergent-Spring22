@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import Swiper from 'react-native-deck-swiper'
 import { StyleSheet, View } from 'react-native'
 
@@ -39,100 +39,103 @@ const dayFilterOptions = [
   "Saturday"
 ]
 
-function getData () {
-  getDocs(collection(db, "Events")).then(docSnap => {
-    let events = [];
-    docSnap.forEach((doc)=>{
-      events.push({ ...doc.data(), id:doc.id})
-    });
-    console.log("Document data:", events);
-
-  });
-};
-
 function TopBar() {
   const theme = extendTheme({
-      components: {
-        Button: {
-          variants: {
-            boxyButton: ({
-              colorScheme
-            }) => {
-              return {
-                bg: `${colorScheme}.50`,
-              };
-            }
+    components: {
+      Button: {
+        variants: {
+          boxyButton: ({
+            colorScheme
+          }) => {
+            return {
+              bg: `${colorScheme}.50`,
+            };
           }
-        },
-        Modal: {
-          variants: {
-            newDefault: ({
-              colorScheme
-            }) => {
-              return {
-                _light: {
-                  bg: `${colorScheme}.500`,
-                  _text: {
-                    color: 'text.900',
-                  },
+        }
+      },
+      Modal: {
+        variants: {
+          newDefault: ({
+            colorScheme
+          }) => {
+            return {
+              _light: {
+                bg: `${colorScheme}.500`,
+                _text: {
+                  color: 'text.900',
                 },
-                _dark: {
-                  bg: `${colorScheme}.800`,
-                  _text: {
-                    color: 'text.50',
-                  },
+              },
+              _dark: {
+                bg: `${colorScheme}.800`,
+                _text: {
+                  color: 'text.50',
                 },
-              };
-            }
+              },
+            };
           }
         }
       }
-    });
-
+    }
+  });
+  
   const [showModal, setShowModal]  = useState(false);
-  const [allFilters, setAllFilters] = useState([]);
+  const [cardInfo, setCardInfo] = useState([]);
   const [eventTypeFilter, setEventTypeFilter] = useState([]);
   const [dayTypeFilter, setDayTypeFilter] = useState([]);
+  
+  function getData () {
+    getDocs(collection(db, "Events")).then(docSnap => {
+      let events = [];
+      docSnap.forEach((doc)=>{
+        if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
+          ((dayTypeFilter.length === 0) || (dayTypeFilter.indexOf(doc.data().DayOfWeek !== -1)))) {
+            events.push({ ...doc.data(), id:doc.id})
+          }
+      });
+      setCardInfo([...events]);
+      console.log("Document data:", events);
+    });
+  };
 
-  const getEventTypeFilter = (e) => {
-    let eventTypeFilterData = eventTypeFilter;
-    let data = allFilters;
-    const index = data.indexOf(e);
-    if (index === -1) {
-      data.push(e);
-    } else {
-      data.splice(index, 1);
-    }
-    setAllFilters([...data]);
-    const typeIndex = eventTypeFilterData.indexOf(e);
-    if (typeIndex === -1) {
-      eventTypeFilterData.push(e);
-    } else {
-      eventTypeFilterData.splice(typeIndex, 1); // could just be index
-    }
-    setEventTypeFilter([...eventTypeFilterData]);
-    console.log("e: ", e);
-    console.log("Event Type Filter", eventTypeFilter);
-  }
+  // const getEventTypeFilter = (e) => {
+  //   let eventTypeFilterData = eventTypeFilter;
+  //   let data = allFilters;
+  //   const index = data.indexOf(e);
+  //   if (index === -1) {
+  //     data.push(e);
+  //   } else {
+  //     data.splice(index, 1);
+  //   }
+  //   setAllFilters([...data]);
+  //   const typeIndex = eventTypeFilterData.indexOf(e);
+  //   if (typeIndex === -1) {
+  //     eventTypeFilterData.push(e);
+  //   } else {
+  //     eventTypeFilterData.splice(typeIndex, 1); // could just be index
+  //   }
+  //   setEventTypeFilter([...eventTypeFilterData]);
+  //   console.log("e: ", e);
+  //   console.log("Event Type Filter", eventTypeFilter);
+  // }
 
-  const getDayTypeFilter = (e) => {
-    let dayTypeFilterData = dayTypeFilter;
-    let data = allFilters;
-    const index = data.indexOf(e.target.value);
-    if (index === -1) {
-      data.push(e.target.value);
-    } else {
-      data.splice(index, 1);
-    }
-    setAllFilter([...data]);
-    const dayIndex = dayTypeFilterData.index(e.target.value);
-    if (dayIndex === -1) {
-      dayTypeFilterData.push(e.target.value);
-    } else {
-      dayTypeFilterData.splice(dayIndex, 1);
-    }
-    setDayTypeFilter([...dayTypeFilterData]);
-  }
+  // const getDayTypeFilter = (e) => {
+  //   let dayTypeFilterData = dayTypeFilter;
+  //   let data = allFilters;
+  //   const index = data.indexOf(e.target.value);
+  //   if (index === -1) {
+  //     data.push(e.target.value);
+  //   } else {
+  //     data.splice(index, 1);
+  //   }
+  //   setAllFilter([...data]);
+  //   const dayIndex = dayTypeFilterData.index(e.target.value);
+  //   if (dayIndex === -1) {
+  //     dayTypeFilterData.push(e.target.value);
+  //   } else {
+  //     dayTypeFilterData.splice(dayIndex, 1);
+  //   }
+  //   setDayTypeFilter([...dayTypeFilterData]);
+  // }
   
   console.log("Event Type: ", eventTypeFilter);
   console.log("Separation")
@@ -160,7 +163,7 @@ function TopBar() {
                           <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
                       </Button>
                       <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={topBarStyles.filterModal}>
-                        <Modal.Content maxWidth="400px" height="450px" colorScheme="orange" variant="newDefault">
+                        <Modal.Content maxWidth="400px" height="500px" colorScheme="orange" variant="newDefault">
                           <Modal.CloseButton />
                           <Modal.Header>Filters</Modal.Header>
                           <Modal.Body>
@@ -213,26 +216,220 @@ const topBarStyles = StyleSheet.create({
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function homepage() {
+  const [showModal, setShowModal]  = useState(false);
+  const [cardInfo, setCardInfo] = useState([]);
+  const [eventTypeFilter, setEventTypeFilter] = useState([]);
+  const [dayTypeFilter, setDayTypeFilter] = useState([]);
+  const [allFilters, setAllFilters] = useState([]);
+
+  function getData () {
+    getDocs(collection(db, "Events")).then(docSnap => {
+      let events = [];
+      docSnap.forEach((doc)=>{
+        if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
+          ((dayTypeFilter.length === 0) || (dayTypeFilter.indexOf(doc.data().DayOfWeek !== -1)))) {
+            events.push({ ...doc.data(), id:doc.id})
+          }
+      });
+      setCardInfo([...events]);
+      console.log("Document data:", events);
+    });
+  };
+
+  useEffect(() => {
+    const getEventData = () => {
+      getDocs(collection(db, "Events")).then(docSnap => {
+        let events = [];
+        docSnap.forEach((doc)=>{
+          if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
+            ((dayTypeFilter.length === 0) || (dayTypeFilter.indexOf(doc.data().DayOfWeek !== -1)))) {
+              events.push({ ...doc.data(), id:doc.id})
+            }
+        });
+        setCardInfo([...events]);
+        console.log("Document data:", events);
+        console.log("All Filter Data", allFilters);
+        console.log("Event Type Filter", eventTypeFilter);
+        console.log("Day Type Filter", dayTypeFilter);
+      });
+    };
+    getEventData();
+  },[allFilters]);
+
   // console.log(usersCollection)
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={theme}>
     <View style={styles.appContainer}>
-      {/* <NativeBaseProvider> */}
       <View style={styles.swipeContainer}>
-        <Cards/>
+        <Cards information={cardInfo}/>
       </View>
-        <View style={styles.topBar}>
-          <TopBar/>
-        </View>
-        <View style={styles.navigationBar}>
-          <Navbar/>
-        </View>
-      {/* </NativeBaseProvider> */}
+      <View style={styles.topBar}>
+        <Box width="100%" height="10%"  rounded="lg" p={8} >
+              <Center>
+                  <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}>
+                      <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
+                      <Box size="lg" width="70%" rounded="sm" _text={{
+                      color: "white",
+                      fontWeight: "medium"
+                      }} >
+                          <Heading color="white">Explore</Heading>
+                          Austin, TX
+                      </Box>
+                      <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setShowModal(true)}>
+                          <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
+                      </Button>
+                      <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={styles.filterModal}>
+                        <Modal.Content maxWidth="400px" height="450px" colorScheme="orange" variant="newDefault">
+                          <Modal.CloseButton />
+                          <Modal.Header>Filters</Modal.Header>
+                          <Modal.Body>
+                            <Heading fontSize="md">Event Type:</Heading>
+                            <Checkbox.Group onChange={setEventTypeFilter} value={eventTypeFilter}>
+                              <Checkbox value="Music">Music</Checkbox>
+                              <Checkbox value="Sports">Sports</Checkbox>
+                              <Checkbox value="Food">Food</Checkbox>
+                              <Checkbox value="Art">Art</Checkbox>
+                            </Checkbox.Group>
+                            
+
+                            <Divider my={4}/>
+
+                            <Heading fontSize="md">Day of the Week:</Heading>
+                            <Checkbox.Group onChange={setDayTypeFilter} value={dayTypeFilter}>
+                              <Checkbox value="Monday">Monday</Checkbox>
+                              <Checkbox value="Tuesday">Tuesday</Checkbox>
+                              <Checkbox value="Wednesday">Wednesday</Checkbox>
+                              <Checkbox value="Thursday">Thursday</Checkbox>
+                              <Checkbox value="Friday">Friday</Checkbox>
+                              <Checkbox value="Saturday">Saturday</Checkbox>
+                              <Checkbox value="Sunday">Sunday</Checkbox>
+                            </Checkbox.Group>
+
+                            <Divider my={4}/>
+
+                            <Button onPress={() => setAllFilters([...allFilters])} value ={allFilters}>Check Filter</Button>
+
+                          </Modal.Body>
+                        </Modal.Content>
+                      </Modal>
+                  </Stack>
+              </Center>
+          </Box>
+      </View>
+      <View style={styles.navigationBar}>
+        <Navbar/>
+      </View>
     </View>
     </NativeBaseProvider>
   );
 }
+
+const theme = extendTheme({
+  components: {
+    Button: {
+      variants: {
+        boxyButton: ({
+          colorScheme
+        }) => {
+          return {
+            bg: `${colorScheme}.50`,
+          };
+        }
+      }
+    },
+    Modal: {
+      variants: {
+        newDefault: ({
+          colorScheme
+        }) => {
+          return {
+            _light: {
+              bg: `${colorScheme}.500`,
+              _text: {
+                color: 'text.900',
+              },
+            },
+            _dark: {
+              bg: `${colorScheme}.800`,
+              _text: {
+                color: 'text.50',
+              },
+            },
+          };
+        }
+      }
+    }
+  }
+});
+
+// const topBarStyles = StyleSheet.create({
+//   navigationBarItems: {
+//       flex: 1,
+//       flexDirection: 'row',
+//       backgroundColor: 'white',
+//     },
+//   filterModal: {
+//     flex: 1,
+//     top: "200%",
+//   }
+// });
 
 const styles = StyleSheet.create({
   topBar: {
@@ -302,4 +499,13 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent'
   },
+  navigationBarItems: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  filterModal: {
+    flex: 1,
+    // top: "200%",
+  }
 })
