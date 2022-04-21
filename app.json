@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "austin-community",
+    "slug": "austin-community",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "austin-community"
+}
