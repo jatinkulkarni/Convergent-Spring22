@@ -27,9 +27,6 @@ export default function TopBar() {
             <Box width="100%" height="10%"  rounded="lg" p={8} >
                 <Center>
                     <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}>
-                        {/* <IconButton icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="light.400" />} />
-                        <Text fontSize="6xl">6xl</Text>
-                        <IconButton colorScheme="light" variant="solid" width="16" icon={<Icon as={Ionicons} name="filter-sharp" size="10" color="light.400" />} /> */}
                         <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
                         <Box size="lg" width="70%" rounded="sm" _text={{
                         color: "white",
@@ -50,29 +47,16 @@ export default function TopBar() {
 
 const styles = StyleSheet.create({
     navigationBar: {
-        // position: 'center',
         flex: 1,
         borderRadius: 30,
         flexDirection: 'column',
-        // justifyContent: 'space-evenly',
-        // alignContent:'center',
         alignItems: 'center',
         alignSelf: 'center',
         marginHorizontal: 20,
-        // height: 80,
-        // top: 800,
     },
     navigationBarItems: {
-        // position: 'center',
         flex: 1,
         flexDirection: 'row',
         backgroundColor: 'white',
-        // justifyContent: 'space-evenly',
-        // alignContent:'center',
-        // alignItems: 'center',
-        // alignSelf: 'center',
-        // marginHorizontal: 20,
-        // height: 80,
-        // top: 800,
       },
 });
