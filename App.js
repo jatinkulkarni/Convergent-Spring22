@@ -4,7 +4,9 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 
 import TopBar from './components/topbar.js'
 import Navbar from './components/navbar.js'
-import { Box, Center, NativeBaseProvider } from "native-base";
+import { Box, Center, NativeBaseProvider, useScreenReaderEnabled } from "native-base";
+import { db } from './firebaseConfig/firebase';
+import { collection, doc, getDocs } from 'firebase/firestore';
 
 // demo purposes only
 function * range (start, end) {
@@ -12,8 +14,19 @@ function * range (start, end) {
     yield i
   }
 }
+function getData () {
+  getDocs(collection(db, "Events")).then(docSnap => {
+    let events = [];
+    docSnap.forEach((doc)=>{
+      events.push({ ...doc.data(), id:doc.id})
+    });
+    console.log("Document data:", events);
+
+  });
+};
 
 class Exemple extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -31,7 +44,7 @@ class Exemple extends Component {
       </View>
     )
   };
-
+  
   onSwiped = (type) => {
     console.log(`on swiped ${type}`)
   }
@@ -53,7 +66,8 @@ class Exemple extends Component {
           ref={swiper => {
             this.swiper = swiper
           }}
-          onSwiped={() => this.onSwiped('general')}
+          // onSwiped={() => this.onSwiped('general')}
+          onSwiped={getData}
           onSwipedLeft={() => this.onSwiped('left')}
           onSwipedRight={() => this.onSwiped('right')}
           onSwipedTop={() => this.onSwiped('top')}
@@ -139,6 +153,22 @@ class Exemple extends Component {
           animateOverlayLabelsOpacity
           animateCardOpacity
           swipeBackCard
+
+          // cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+          // getData
+          // // cards={events}
+          //   renderCard={(card) => {
+          //       return (
+          //           <View style={styles.card}>
+          //               <Text style={styles.text}>{card}</Text>
+          //           </View>
+          //       )
+          //   }}
+          //   onSwiped={(cardIndex) => {console.log(cardIndex)}}
+          //   onSwipedAll={() => {console.log('onSwipedAll')}}
+          //   cardIndex={0}
+          //   backgroundColor={'#4FD0E9'}
+          //   stackSize= {3}
         >
           <Button onPress={() => this.swiper.swipeBack()} title='Swipe Back' />
         </Swiper>
