@@ -55,4 +55,4 @@ web-build/
 dist/
 
 # Firebase
-.firebaseConfig/firebase.js
+firebaseConfig/
