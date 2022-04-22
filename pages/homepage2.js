@@ -3,6 +3,7 @@ import Swiper from 'react-native-deck-swiper'
 import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MaterialIcons } from "@expo/vector-icons";
 
 // import TopBar from '../components/topbar.js'
 import Navbar from '../components/navbar.js'
@@ -11,7 +12,7 @@ import {
   Box, Center, NativeBaseProvider, 
   Modal, Stack, Heading, IconButton, 
   Icon, Button,  extendTheme, Text,
-  Checkbox, Divider 
+  Checkbox, Divider, HStack 
 } from "native-base";
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { db } from '../firebaseConfig/firebase';
@@ -40,9 +41,9 @@ export default function Homepage({ navigation }) {
     });
   };
   
-  useEffect(() => {
-    const getEventData = () => {
-      getDocs(collection(db, "Events")).then(docSnap => {
+  useEffect(async () => {
+    const getEventData = async () => {
+      await getDocs(collection(db, "Events")).then(docSnap => {
         let events = [];
         docSnap.forEach((doc)=>{
           if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
@@ -52,9 +53,9 @@ export default function Homepage({ navigation }) {
         });
         setCardInfo([...events]);
         console.log("Document data:", events);
-        console.log("All Filter Data", allFilters);
-        console.log("Event Type Filter", eventTypeFilter);
-        console.log("Day Type Filter", dayTypeFilter);
+        // console.log("All Filter Data", allFilters);
+        // console.log("Event Type Filter", eventTypeFilter);
+        // console.log("Day Type Filter", dayTypeFilter);
       });
     };
     getEventData();
@@ -65,7 +66,7 @@ export default function Homepage({ navigation }) {
     <NativeBaseProvider theme={theme}>
     <View style={styles.appContainer}>
       <View style={styles.swipeContainer}>
-        <Cards information={cardInfo}/>
+        { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
       </View>
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
@@ -121,7 +122,16 @@ export default function Homepage({ navigation }) {
           </Box>
       </View>
       <View style={styles.navigationBar}>
-        <Navbar/>
+        <Box width="100%" height="10%" bg="light.50" rounded="lg" p={8} style={styles.navigationBarComponent}>
+            <Center>
+                <HStack justifyContent="center" style={styles.navigationBarItems}>
+                    <IconButton onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} />
+                    {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
+                    <IconButton icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
+                    <IconButton icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
+                </HStack>
+            </Center>
+        </Box>
       </View>
     </View>
     </NativeBaseProvider>
@@ -254,7 +264,32 @@ const styles = StyleSheet.create({
   filterModal: {
     flex: 1,
     // top: "200%",
-  }
+  },
+  navigationBarComponent: {
+    // position: 'center',
+    flex: 1,
+    borderRadius: 30,
+    flexDirection: 'column',
+    // justifyContent: 'space-evenly',
+    // alignContent:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginHorizontal: 20,
+    // height: 80,
+    // top: 800,
+},
+navigationBarItems: {
+    // position: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignContent:'center',
+    alignItems: 'center',
+    // alignSelf: 'center',
+    // marginHorizontal: 20,
+    // height: 80,
+    // top: 800,
+  },
 })
 
 

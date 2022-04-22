@@ -25,23 +25,23 @@ export default function Cards( { information }) {
   return(
         <Swiper
             // cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
-            cards={[information]}
+            cards={information}
             renderCard={(card) => {
-              console.log("In card.js", card)
+              console.log("Information In card.js", information)
                 return (
                     <View style={styles.card}>
                       <VStack space="2.5" mt="4" px="8">
                         <Stack direction="row" mb="2.5" mt="1.5" space={3}>
                           <Icon as={Ionicons} name="calendar-outline" size="10" color="red.500" />
-                          <Text>Date and Time Info</Text>
+                          <Text>{card.DayOfWeek}</Text>
                         </Stack>
                         <Stack direction="row" mb="2.5" mt="1.5" space={3}>
                           <Icon as={Ionicons} name="location-outline" size="10" color="red.500" />
-                          <Text>Location Info</Text>
+                          <Text>{card.Location}</Text>
                         </Stack>
                         <Stack direction="column" mb="2.5" mt="1.5" space={3}>
                           <Text>About</Text>
-                          <Text>About Info</Text>
+                          <Text>{card.About}</Text>
                         </Stack>
                       </VStack>
                     </View>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       // borderWidth: 1,
       borderColor: '#E8E8E8',
-      justifyContent: 'center',
+    //   justifyContent: 'center',
       backgroundColor: 'white'
     },
     text: {
