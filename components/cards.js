@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Box } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Icon, VStack, Stack } from 'native-base'
@@ -20,7 +20,7 @@ export default function Cards( { information }) {
         <Text>{card}</Text>
       </View>
     )
-  }
+  } 
 
   return(
         <Swiper
@@ -30,20 +30,22 @@ export default function Cards( { information }) {
               console.log("Information In card.js", information)
                 return (
                     <View style={styles.card}>
-                      <VStack space="2.5" mt="4" px="8">
-                        <Stack direction="row" mb="2.5" mt="1.5" space={3}>
-                          <Icon as={Ionicons} name="calendar-outline" size="10" color="red.500" />
-                          <Text>{card.DayOfWeek}</Text>
-                        </Stack>
-                        <Stack direction="row" mb="2.5" mt="1.5" space={3}>
-                          <Icon as={Ionicons} name="location-outline" size="10" color="red.500" />
-                          <Text>{card.Location}</Text>
-                        </Stack>
-                        <Stack direction="column" mb="2.5" mt="1.5" space={3}>
-                          <Text>About</Text>
-                          <Text>{card.About}</Text>
-                        </Stack>
-                      </VStack>
+                      <View style={styles.cardInformation}>
+                        <VStack space="2.5" mt="4" px="8">
+                          <Stack direction="row" mb="2.5" mt="1.5" space={3}>
+                            <Icon as={Ionicons} name="calendar-outline" size="10" color="red.500" />
+                            <Text>{card.DayOfWeek}</Text>
+                          </Stack>
+                          <Stack direction="row" mb="2.5" mt="1.5" space={3}>
+                            <Icon as={Ionicons} name="location-outline" size="10" color="red.500" />
+                            <Text>{card.Location}</Text>
+                          </Stack>
+                          <Stack direction="column" mb="2.5" mt="1.5" space={3}>
+                            <Text>About</Text>
+                            <Text>{card.About}</Text>
+                          </Stack>
+                        </VStack>
+                      </View>
                     </View>
                 )
             }}
@@ -144,7 +146,16 @@ const styles = StyleSheet.create({
       // borderWidth: 1,
       borderColor: '#E8E8E8',
     //   justifyContent: 'center',
-      backgroundColor: 'white'
+      backgroundColor: 'gray'
+    },
+    cardInformation: {
+      flex: 1,
+      position: 'absolute',
+      alignSelf: 'center',
+      width: '100%',
+      height: '65%',
+      top: "45%",
+      backgroundColor:'white',
     },
     text: {
       textAlign: 'center',
