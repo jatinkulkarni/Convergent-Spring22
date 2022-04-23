@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import Swiper from 'react-native-deck-swiper'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Modal, Text, Pressable, ScrollView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialIcons } from "@expo/vector-icons";
@@ -10,10 +10,10 @@ import Navbar from '../components/navbar.js'
 import Cards from '../components/cards'
 import { 
   Box, Center, NativeBaseProvider, 
-  Modal, Stack, Heading, IconButton, 
-  Icon, Button,  extendTheme, Text,
-  Checkbox, Divider, HStack 
-} from "native-base";
+   Stack, Heading, IconButton, 
+  Icon, Button,  extendTheme,
+  Checkbox, Divider, HStack, Spacer 
+} from "native-base"; // took Text and Modal out
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { db } from '../firebaseConfig/firebase';
 import { collection, doc, getDocs } from 'firebase/firestore';
@@ -22,9 +22,30 @@ import { collection, doc, getDocs } from 'firebase/firestore';
 
 export default function Homepage({ navigation }) {
   const [showModal, setShowModal]  = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [filterSelected, setFilterSelected] = useState(false);
+
+  const [musicFilterSelected, setMusicFilterSelected] = useState(false);
+  const [sportsFilterSelected, setSportsFilterSelected] = useState(false);
+  const [foodFilterSelected, setFoodFilterSelected] = useState(false);
+  const [artFilterSelected, setArtFilterSelected] = useState(false);
+
+  const [mondayFilter, setMondayFilter] = useState(false);
+  const [tuesdayFilter, setTuesdayFilter] = useState(false);
+  const [wednesdayFilter, setWednesdayFilter] = useState(false);
+  const [thursdayFilter, setThursdayFilter] = useState(false);
+  const [fridayFilter, setFridayFilter] = useState(false);
+  const [saturdayFilter, setSaturdayFilter] = useState(false);
+  const [sundayFilter, setSundayFilter] = useState(false);
+
+  const [morningFilter, setMorningFilter] = useState(false);
+  const [afternoonFilter, setAfternoonFilter] = useState(false);
+  const [eveningFilter, setEveningFilter] = useState(false);
+
   const [cardInfo, setCardInfo] = useState([]);
   const [eventTypeFilter, setEventTypeFilter] = useState([]);
   const [dayTypeFilter, setDayTypeFilter] = useState([]);
+  const [timeOfDayFilter, setTimeOfDayFilter] = useState([]);
   const [allFilters, setAllFilters] = useState([]);
   
   function getData () {
@@ -40,6 +61,77 @@ export default function Homepage({ navigation }) {
         console.log("Document data:", events);
     });
   };
+
+  function resetFilters () {
+      setMusicFilterSelected(false);
+      setSportsFilterSelected(false);
+      setFoodFilterSelected(false);
+      setArtFilterSelected(false);
+
+      setEventTypeFilter([]);
+
+      setMondayFilter(false);
+      setTuesdayFilter(false);
+      setWednesdayFilter(false);
+      setThursdayFilter(false);
+      setFridayFilter(false);
+      setSaturdayFilter(false);
+      setSundayFilter(false);
+
+      setDayTypeFilter([]);
+
+      setMorningFilter(false);
+      setAfternoonFilter(false);
+      setEveningFilter(false);
+
+      setTimeOfDayFilter([]);
+  }
+
+  function addFilters () {
+      let eventFilters = [];
+      musicFilterSelected ? eventFilters.push("Music") : null;
+      sportsFilterSelected ? eventFilters.push("Sports") : null;
+      foodFilterSelected ? eventFilters.push("Food") : null;
+      artFilterSelected ? eventFilters.push("Art"): null;
+
+      setEventTypeFilter([...eventFilters]);
+
+      let dayFilters = [];
+      mondayFilter ? dayFilters.push("Monday") : null;
+      tuesdayFilter ? dayFilters.push("Tuesday") : null;
+      wednesdayFilter ? dayFilters.push("Wednesday") : null;
+      thursdayFilter ? dayFilters.push("Thursday") : null;
+      fridayFilter ? dayFilters.push("Friday") : null;
+      saturdayFilter ? dayFilters.push("Sunday") : null;
+      sundayFilter ? dayFilters.push("Saturday") : null;
+
+      setDayTypeFilter([...dayFilters]);
+
+      let timeTypeFilters = [];
+      morningFilter ? timeTypeFilters.push("Morning") : null;
+      afternoonFilter ? timeTypeFilters.push("Afternoon") : null;
+      eveningFilter ?  timeTypeFilters.push("Evening") : null;
+
+      setTimeOfDayFilter([...timeTypeFilters]);
+
+      musicFilterSelected ? console.log("this") : console.log("that");
+      console.log("eventFilters = ", eventFilters);
+    //   setEventTypeFilter([musicFilterSelected]);
+    //   setEventTypeFilter([...sportsFilterSelected]);
+    //   setEventTypeFilter([...setFoodFilterSelected]);
+    //   setEventTypeFilter([...artFilterSelected]);
+
+    //   setDayTypeFilter([mondayFilter]);
+    //   setDayTypeFilter([...tuesdayFilter]);
+    //   setDayTypeFilter([...wednesdayFilter]);
+    //   setDayTypeFilter([...thursdayFilter]);
+    //   setDayTypeFilter([...fridayFilter]);
+    //   setDayTypeFilter([...saturdayFilter]);
+    //   setDayTypeFilter([...sundayFilter]);
+
+      console.log("event type filter" , eventTypeFilter);
+      console.log("day type filter", dayTypeFilter);
+  }
   
   useEffect(async () => {
     const getEventData = async () => {
@@ -74,16 +166,158 @@ export default function Homepage({ navigation }) {
                   <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}>
                       <IconButton  width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
                       <Box size="lg" width="70%" rounded="sm" _text={{
-                        color: "white",
-                      fontWeight: "medium"
-                    }} >
-                          <Heading color="white">Explore</Heading>
-                          Austin, TX
+                          color: "white",
+                          fontWeight: "medium"
+                        }} >
+                        <Heading color="white">Explore</Heading>
+                        Austin, TX
                       </Box>
-                      <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setShowModal(true)}>
+                      {/* <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setShowModal(true)}>
+                          <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
+                      </Button> */}
+                      <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setModalVisible(true)}>
                           <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
                       </Button>
-                      <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={styles.filterModal}>
+                      <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        Alert.alert("Modal has been closed.");
+                        setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.filterTitle}>Filters</Text>
+                            <Divider/>
+                            <Text style={styles.filterSubtitle}>Event Tags</Text>
+                            <ScrollView style={styles.scrollView} horizontal indicatorStyle='black'>
+                                <Stack direction="row">
+                                    <Pressable
+                                    style={[styles.button, musicFilterSelected ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setMusicFilterSelected(!musicFilterSelected);}}
+                                    >
+                                    <Text style={styles.textStyle}>Music</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, sportsFilterSelected ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setSportsFilterSelected(!sportsFilterSelected);}}
+                                    >
+                                    <Text style={styles.textStyle}>Sports</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, foodFilterSelected ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setFoodFilterSelected(!foodFilterSelected);}}
+                                    >
+                                    <Text style={styles.textStyle}>Food</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, artFilterSelected ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setArtFilterSelected(!artFilterSelected);}}
+                                    >
+                                    <Text style={styles.textStyle}>Art</Text>
+                                    </Pressable>
+                                </Stack>
+                            </ScrollView>
+
+                            <Divider/>
+
+                            <Text style={styles.filterSubtitle}>Day</Text>
+                            <ScrollView style={styles.scrollView} horizontal indicatorStyle='black'>
+                                <Stack direction="row">
+                                    <Pressable
+                                    style={[styles.button, mondayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setMondayFilter(!mondayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Monday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, tuesdayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setTuesdayFilter(!tuesdayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Tuesday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, wednesdayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setWednesdayFilter(!wednesdayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Wednesday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, thursdayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setThursdayFilter(!thursdayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Thursday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, fridayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setFridayFilter(!fridayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Friday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, saturdayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setSaturdayFilter(!saturdayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Saturday</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, sundayFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setSundayFilter(!sundayFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Sunday</Text>
+                                    </Pressable>
+                                </Stack>
+                            </ScrollView>
+
+                            <Divider/>
+
+                            <Text style={styles.filterSubtitle}>Event Tags</Text>
+                            <ScrollView style={styles.scrollView} horizontal indicatorStyle='black'>
+                                <Stack direction="row">
+                                    <Pressable
+                                    style={[styles.button, morningFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setMorningFilter(!morningFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Morning</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, afternoonFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setAfternoonFilter(!afternoonFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Afternoon</Text>
+                                    </Pressable>
+                                    <Pressable
+                                    style={[styles.button, eveningFilter ? styles.buttonClicked : styles.buttonUnClicked]}
+                                    onPress={() => {setEveningFilter(!eveningFilter);}}
+                                    >
+                                    <Text style={styles.textStyle}>Evening</Text>
+                                    </Pressable>
+                                </Stack>
+                            </ScrollView>
+
+                            <Spacer/>
+
+                            <HStack alignItems="flex-end">
+                                <Spacer/>
+                                <Pressable
+                                style={[styles.button, styles.buttonUnClicked]}
+                                onPress={() => { resetFilters() }}
+                                >
+                                <Text style={styles.textStyle}>Reset</Text>
+                                </Pressable>
+                                <Pressable
+                                style={[styles.button, styles.buttonClicked]}
+                                onPress={() => { setModalVisible(!modalVisible); addFilters();}}
+                                >
+                                <Text style={styles.textStyle}>Apply</Text>
+                                </Pressable>
+                            </HStack>
+                        </View>
+                        </View>
+                    </Modal>
+                      {/* <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={styles.filterModal}>
                         <Modal.Content maxWidth="400px" height="450px" colorScheme="orange" variant="newDefault">
                           <Modal.CloseButton />
                           <Modal.Header>Filters</Modal.Header>
@@ -116,7 +350,7 @@ export default function Homepage({ navigation }) {
 
                           </Modal.Body>
                         </Modal.Content>
-                      </Modal>
+                      </Modal> */}
                   </Stack>
               </Center>
           </Box>
@@ -201,9 +435,12 @@ const styles = StyleSheet.create({
     top: "20%",
     // top: 800,
   },
+  topBarText: {
+      top: "50%",
+  },
   navigationBar: {
     // position: 'center',
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignContent:'center',
@@ -256,13 +493,13 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent'
   },
-  navigationBarItems: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'white',
-  },
+//   navigationBarItems: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     backgroundColor: 'white',
+//   },
   filterModal: {
-    flex: 1,
+    // flex: 1,
     // top: "200%",
   },
   navigationBarComponent: {
@@ -289,6 +526,70 @@ navigationBarItems: {
     // marginHorizontal: 20,
     // height: 80,
     // top: 800,
+  },
+
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 10,
+    // alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    height: 400,
+    width: "100%",
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    width: 100,
+    height: 35,
+    margin: 3,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonUnClicked: {
+    backgroundColor: "#C4C4C4",
+  },
+  buttonClicked: {
+    backgroundColor: "#F0635A",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "left"
+  },
+  scrollView: {
+    marginBottom: 10,
+    height: 1,
+  },
+  filterTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10
+  },
+  filterSubtitle: {
+    fontSize: 15,
+    marginVertical: 5,
   },
 })
 
