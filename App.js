@@ -5,6 +5,8 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import TopBar from './components/topbar.js'
 import Navbar from './components/navbar.js'
 import { Box, Center, NativeBaseProvider } from "native-base";
+import Login from './pages/login.js'
+import SignUpScreen from './pages/signup.js'
 
 // demo purposes only
 function * range (start, end) {
@@ -160,23 +162,18 @@ class Exemple extends Component {
 export default function App() {
   // console.log(usersCollection)
   return (
-    <NativeBaseProvider>
-    <View style={styles.appContainer}>
-      {/* <NativeBaseProvider> */}
-      <View style={styles.swipeContainer}>
-        <Exemple/>
-      </View>
-        <View style={styles.topBar}>
-          <TopBar/>
-        </View>
-        <View style={styles.navigationBar}>
-          <Navbar/>
-        </View>
-      {/* </NativeBaseProvider> */}
-    </View>
-    </NativeBaseProvider>
-  );
-}
+      <NativeBaseProvider>
+       <Login>
+       </Login>
+       {/* <SignUpScreen>
+
+       </SignUpScreen> */}
+
+      
+      </NativeBaseProvider>
+    );
+  }
+
 
 const styles = StyleSheet.create({
   topBar: {
