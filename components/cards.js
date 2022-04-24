@@ -24,7 +24,6 @@ export default function Cards( { information }) {
 
   return(
         <Swiper
-            // cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
             cards={information}
             renderCard={(card) => {
               console.log("Information In card.js", information)
