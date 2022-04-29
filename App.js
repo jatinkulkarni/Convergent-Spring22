@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 
 import TopBar from './components/topbar.js';
 import Navbar from './components/navbar.js';
+import Profile from './pages/profile.js'
 import { Box, Center, NativeBaseProvider } from "native-base";
 // import db from './database/firebase';
 // import { doc, getDoc, setDoc, addDoc, collection, query, where } from "firebase/firestore";
@@ -166,19 +167,8 @@ export default function App() {
   // console.log(eventsdb);
   return (
     <NativeBaseProvider>
-    <View style={styles.appContainer}>
-      {/* <NativeBaseProvider> */}
-      <View style={styles.swipeContainer}>
-        <Exemple/>
-      </View>
-        <View style={styles.topBar}>
-          <TopBar/>
-        </View>
-        <View style={styles.navigationBar}>
-          <Navbar/>
-        </View>
-      {/* </NativeBaseProvider> */}
-    </View>
+      <Profile>
+      </Profile>
     </NativeBaseProvider>
   );
 }
