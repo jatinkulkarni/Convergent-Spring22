@@ -14,7 +14,6 @@ export default function Cards( { information }) {
   // };
 
   const Card = ({ card, index }) => {
-    console.log("🙈🙉🙊")
     return(
       <View style={styles.card}>
         <Text>{card}</Text>
@@ -26,7 +25,7 @@ export default function Cards( { information }) {
         <Swiper
             cards={information}
             renderCard={(card) => {
-              console.log("Information In card.js", information)
+              // console.log("Information In card.js", information)
                 return (
                     <View style={styles.card}>
                       <View style={styles.cardInformation}>

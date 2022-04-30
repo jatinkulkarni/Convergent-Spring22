@@ -58,7 +58,7 @@ export default function Homepage({ navigation }) {
           }
         });
         setCardInfo([...events]);
-        console.log("Document data:", events);
+        // console.log("Document data:", events);
     });
   };
 
@@ -114,8 +114,8 @@ export default function Homepage({ navigation }) {
 
       setTimeOfDayFilter([...timeTypeFilters]);
 
-      musicFilterSelected ? console.log("this") : console.log("that");
-      console.log("eventFilters = ", eventFilters);
+      // musicFilterSelected ? console.log("this") : console.log("that");
+      // console.log("eventFilters = ", eventFilters);
     //   setEventTypeFilter([musicFilterSelected]);
     //   setEventTypeFilter([...sportsFilterSelected]);
     //   setEventTypeFilter([...setFoodFilterSelected]);
@@ -129,8 +129,8 @@ export default function Homepage({ navigation }) {
     //   setDayTypeFilter([...saturdayFilter]);
     //   setDayTypeFilter([...sundayFilter]);
 
-      console.log("event type filter" , eventTypeFilter);
-      console.log("day type filter", dayTypeFilter);
+      // console.log("event type filter" , eventTypeFilter);
+      // console.log("day type filter", dayTypeFilter);
   }
   
   useEffect(async () => {
@@ -144,7 +144,7 @@ export default function Homepage({ navigation }) {
           }
         });
         setCardInfo([...events]);
-        console.log("Document data:", events);
+        // console.log("Document data:", events);
         // console.log("All Filter Data", allFilters);
         // console.log("Event Type Filter", eventTypeFilter);
         // console.log("Day Type Filter", dayTypeFilter);
@@ -359,10 +359,12 @@ export default function Homepage({ navigation }) {
         <Box width="100%" height="10%" bg="light.50" rounded="lg" p={8} style={styles.navigationBarComponent}>
             <Center>
                 <HStack justifyContent="center" style={styles.navigationBarItems}>
-                    <IconButton onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} />
+                    <IconButton width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} borderRadius="full" />
                     {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
-                    <IconButton icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
-                    <IconButton icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
+                    <Spacer/>
+                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
+                    <Spacer/>
+                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
                 </HStack>
             </Center>
         </Box>
@@ -517,7 +519,7 @@ const styles = StyleSheet.create({
 },
 navigationBarItems: {
     // position: 'center',
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignContent:'center',

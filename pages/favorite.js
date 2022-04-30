@@ -1,30 +1,103 @@
 import React, { Component, useState, useEffect } from 'react'
 import Swiper from 'react-native-deck-swiper'
-import { StyleSheet, View } from 'react-native'
+// import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // import TopBar from '../components/topbar.js'
 import Navbar from '../components/navbar.js'
 import Cards from '../components/cards'
-import { 
-  Box, Center, NativeBaseProvider, 
-  Modal, Stack, Heading, IconButton, 
-  Icon, Button,  extendTheme, Text,
-  Checkbox, Divider 
-} from "native-base";
+import { VStack, Center, useTheme, Heading, NativeBaseProvider, Button, Box, Divider } from "native-base";
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { db } from '../firebaseConfig/firebase';
 import { collection, doc, getDocs } from 'firebase/firestore';
+import SavedCards from '../components/savedCards.js';
+import { useFonts } from 'expo-font';
+import Public_Sans_font from '../assets/PublicSans-Light.ttf';
 
 
 export default function Favorite() {
-    const [cardInfo, setCardInfo] = useState(["This", "Should", "Be", "The", "Favorites", "Page"]);
+    // const [cardInfo, setCardInfo] = useState(["This", "Should", "Be", "The", "Favorites", "Page"]);
+    const [allFilters, setAllFilters] = useState([]);
+    const [cardInfo, setCardInfo] = useState([]);
+
+    // const [loaded] = useFonts({
+    //   Public_Sans: require('../assets/PublicSans-Light.ttf'),
+    // });
+
+    // if (!loaded) {
+    //   return null;
+    // }
+
+    // const styles = StyleSheet.create({
+    //   baseText: {
+    //     fontFamily: "Roboto"
+    //   },
+    //   titleText: {
+    //     fontSize: 20,
+    //     fontWeight: "bold"
+    //   }
+    // });
+
+    useEffect(async () => {
+      const getEventData = async () => {
+        await getDocs(collection(db, "Events")).then(docSnap => {
+          setCardInfo([]);
+          const events = []; // let
+          docSnap.forEach((doc)=>{
+            events.push({ ...doc.data(), id:doc.id})
+            // if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
+            // ((dayTypeFilter.length === 0) || (dayTypeFilter.indexOf(doc.data().DayOfWeek !== -1)))) {
+            //   events.push({ ...doc.data(), id:doc.id})
+            // }
+          });
+          setCardInfo([...events]);
+          console.log({cardInfo});
+          console.log("Document data:", events);
+          console.log("in favorite page");
+          // console.log("All Filter Data", allFilters);
+          // console.log("Event Type Filter", eventTypeFilter);
+          // console.log("Day Type Filter", dayTypeFilter);
+        });
+      };
+      getEventData();
+    },[allFilters]);
+
+    const savedCardInfo = cardInfo.map((cardData) =>
+    <SavedCards information={cardData}/>);
+
     return (
+        // <NativeBaseProvider>
+        //     <View style={styles.swipeContainer}>
+        //         <Cards information={cardInfo}/>
+        //     </View>
+        // </NativeBaseProvider>
         <NativeBaseProvider>
-            <View style={styles.swipeContainer}>
-                <Cards information={cardInfo}/>
-            </View>
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
+              {/* {savedCardInfo} */}
+              <VStack spacing={5}>
+                  {cardInfo.map((cardData) => (
+                    // <SavedCards information = {cardData}/>
+                    <Box border="1" borderRadius="md" bg="light.50" m="5">
+                      <VStack space="4" divider={<Divider />}>
+                        <Box px="4" pt="4">
+                          <Text style={{fontSize: 20, fontFamily: 'Kailasa-Bold'}}>{cardData.Title}</Text>
+                        </Box>
+                        <Box px="4">
+                          <Text style={{fontFamily: 'Kailasa'}}>About: {cardData.About}</Text>
+                        </Box>
+                        <Box px="4" pb="4">
+                          <Text style={{fontFamily: 'Kailasa'}}>Location: {cardData.Location}</Text>
+                        </Box>
+                      </VStack>
+                    </Box>
+                  ))}
+              </VStack>
+              
+            </ScrollView>
+          </SafeAreaView>
         </NativeBaseProvider>
     )
 }
