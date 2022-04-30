@@ -14,9 +14,9 @@ function * range (start, end) {
   for (let i = start; i <= end; i++) {
     yield i
   }
-}
+} 
 
-class Exemple extends Component {
+class Example extends Component {
   constructor (props) {
     super(props)
     this.state = {
