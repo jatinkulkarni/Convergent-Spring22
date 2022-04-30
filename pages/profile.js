@@ -10,7 +10,6 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import { ButtonGroup } from 'react-native-elements';
 
 const ProfileScreen = () => {
     const [email, setEmail] = useState("");
@@ -31,12 +30,6 @@ const ProfileScreen = () => {
             <Text style = {styles.forgot_botton}>
                 <Text style = {styles.forgot_botton}> Interests</Text> 
             </Text>
-            <ButtonGroup
-                buttons={buttons}
-                containerStyle={{height: 40}}
-                buttonContainerStyle={{backgroundColor: 'cadetblue'}}
-                textStyle={{color: '#fff'}}
-            />
             <View style = {styles.inputView}>
            <TextInput
                 style={styles.TextInput}
