@@ -28,20 +28,22 @@ export default function Cards( { information }) {
               // console.log("Information In card.js", information)
                 return (
                     <View style={styles.card}>
+                      {/* <Image source={require({card.picPath})} */}
                       <View style={styles.cardInformation}>
-                        <VStack space="2.5" mt="4" px="8">
-                          <Stack direction="row" mb="2.5" mt="1.5" space={3}>
-                            <Icon as={Ionicons} name="calendar-outline" size="10" color="red.500" />
-                            <Text>{card.DayOfWeek}</Text>
+                        <VStack space="2" mt="4" px="4">
+                          <Text style={{fontSize: 22, fontFamily: 'Kailasa-Bold'}}>{card.Organizer} | {card.Title}</Text>
+                          <Stack direction="row" mb="1.5" mt="1" space={3}>
+                            <Icon as={Ionicons} name="calendar-outline" size="5" color="red.500" />
+                            <Text style={{fontSize: 12, fontFamily: 'Kailasa'}}>{card.DayOfWeek}</Text>
                           </Stack>
-                          <Stack direction="row" mb="2.5" mt="1.5" space={3}>
-                            <Icon as={Ionicons} name="location-outline" size="10" color="red.500" />
-                            <Text>{card.Location}</Text>
+                          <Stack direction="row" mb="1.5" mt="1" space={3}>
+                            <Icon as={Ionicons} name="location-outline" size="5" color="red.500" />
+                            <Text style={{fontSize: 12, fontFamily: 'Kailasa'}}>{card.Location}</Text>
                           </Stack>
-                          <Stack direction="column" mb="2.5" mt="1.5" space={3}>
+                          {/* <Stack direction="column" mb="2" mt="1" space={3}>
                             <Text>About</Text>
-                            <Text>{card.About}</Text>
-                          </Stack>
+                            <Text style={{fontSize: 12, fontFamily: 'Kailasa'}}>{card.About}</Text>
+                          </Stack> */}
                         </VStack>
                       </View>
                     </View>
@@ -151,8 +153,8 @@ const styles = StyleSheet.create({
       position: 'absolute',
       alignSelf: 'center',
       width: '100%',
-      height: '65%',
-      top: "45%",
+      height: '35%',
+      top: "70%",
       backgroundColor:'white',
     },
     text: {

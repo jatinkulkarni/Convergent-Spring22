@@ -81,7 +81,7 @@ export default function Favorite() {
                   {cardInfo.map((cardData) => (
                     // <SavedCards information = {cardData}/>
                     <Box border="1" borderRadius="md" bg="light.50" m="5">
-                      <VStack space="4" divider={<Divider />}>
+                      <VStack space="4" > 
                         <Box px="4" pt="4">
                           <Text style={{fontSize: 20, fontFamily: 'Kailasa-Bold'}}>{cardData.Title}</Text>
                         </Box>
@@ -101,6 +101,7 @@ export default function Favorite() {
         </NativeBaseProvider>
     )
 }
+// divider={<Divider />}
 
 const styles = StyleSheet.create({
     topBar: {

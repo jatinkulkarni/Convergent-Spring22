@@ -157,9 +157,6 @@ export default function Homepage({ navigation }) {
   return (
     <NativeBaseProvider theme={theme}>
     <View style={styles.appContainer}>
-      <View style={styles.swipeContainer}>
-        { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
-      </View>
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
               <Center>
@@ -354,6 +351,9 @@ export default function Homepage({ navigation }) {
                   </Stack>
               </Center>
           </Box>
+      </View>
+      <View style={styles.swipeContainer}>
+        { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
       </View>
       <View style={styles.navigationBar}>
         <Box width="100%" height="10%" bg="light.50" rounded="lg" p={8} style={styles.navigationBarComponent}>
