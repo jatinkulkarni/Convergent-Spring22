@@ -160,21 +160,28 @@ export default function Homepage({ navigation }) {
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
               <Center>
-                  <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}>
-                      <IconButton  width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
-                      <Box size="lg" width="70%" rounded="sm" _text={{
+                  {/* <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}> */}
+                  <HStack justifyContent="center" style={styles.navigationBarItems}>
+                      <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
+                      <Box size="lg" width="70%" rounded="sm" height="10" text={{
                           color: "white",
                           fontWeight: "medium"
                         }} >
-                        <Heading color="white">Explore</Heading>
-                        Austin, TX
+                        <Heading color="white">  Explore</Heading>
+                        <Heading color="white">  Austin, TX</Heading>
                       </Box>
-                      {/* <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setShowModal(true)}>
-                          <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
-                      </Button> */}
+                      {/* <Box alignSelf="center" bg="primary.500" height="16" _text={{
+                      fontSize: "md",
+                      fontWeight: "medium",
+                      color: "warmGray.50",
+                      letterSpacing: "lg"
+                    }}>
+                        This is a Box
+                      </Box> */}
                       <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setModalVisible(true)}>
                           <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
                       </Button>
+                  </HStack>
                       <Modal
                         animationType="slide"
                         transparent={true}
@@ -314,41 +321,7 @@ export default function Homepage({ navigation }) {
                         </View>
                         </View>
                     </Modal>
-                      {/* <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={styles.filterModal}>
-                        <Modal.Content maxWidth="400px" height="450px" colorScheme="orange" variant="newDefault">
-                          <Modal.CloseButton />
-                          <Modal.Header>Filters</Modal.Header>
-                          <Modal.Body>
-                            <Heading fontSize="md">Event Type:</Heading>
-                            <Checkbox.Group onChange={setEventTypeFilter} value={eventTypeFilter}>
-                              <Checkbox value="Music">Music</Checkbox>
-                              <Checkbox value="Sports">Sports</Checkbox>
-                              <Checkbox value="Food">Food</Checkbox>
-                              <Checkbox value="Art">Art</Checkbox>
-                            </Checkbox.Group>
-                            
-
-                            <Divider my={4}/>
-
-                            <Heading fontSize="md">Day of the Week:</Heading>
-                            <Checkbox.Group onChange={setDayTypeFilter} value={dayTypeFilter}>
-                              <Checkbox value="Monday">Monday</Checkbox>
-                              <Checkbox value="Tuesday">Tuesday</Checkbox>
-                              <Checkbox value="Wednesday">Wednesday</Checkbox>
-                              <Checkbox value="Thursday">Thursday</Checkbox>
-                              <Checkbox value="Friday">Friday</Checkbox>
-                              <Checkbox value="Saturday">Saturday</Checkbox>
-                              <Checkbox value="Sunday">Sunday</Checkbox>
-                            </Checkbox.Group>
-
-                            <Divider my={4}/>
-
-                            <Button onPress={() => setAllFilters([...allFilters])} value ={allFilters}>Check Filter</Button>
-
-                          </Modal.Body>
-                        </Modal.Content>
-                      </Modal> */}
-                  </Stack>
+                  {/* </Stack> */}
               </Center>
           </Box>
       </View>
