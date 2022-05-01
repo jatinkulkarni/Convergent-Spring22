@@ -4,6 +4,7 @@ import { StyleSheet, View, Modal, Text, Pressable, ScrollView } from 'react-nati
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialIcons } from "@expo/vector-icons";
+import { LinearGradient } from 'expo-linear-gradient';
 
 // import TopBar from '../components/topbar.js'
 import Navbar from '../components/navbar.js'
@@ -153,22 +154,49 @@ export default function Homepage({ navigation }) {
     getEventData();
   },[allFilters]);
 
+  // const config = {
+  //   dependencies: {
+  //     "linear-gradient": require("react-native-linear-gradient").default,
+  //   },
+  // };
+
+  const config = {
+    dependencies: {
+      "linear-gradient": LinearGradient
+    }
+  };
+
   // console.log(usersCollection)
   return (
-    <NativeBaseProvider theme={theme}>
+    <NativeBaseProvider config={config} theme={theme}>
     <View style={styles.appContainer}>
+      <View style={styles.backgroundBox}>
+        <Box 
+          height="751" 
+          width="425" 
+          bg={{
+            linearGradient: {
+              colors: ["rose.700", "rose.50"],
+              start: [.5, .1],
+              end: [1, 1],
+            },
+          }}
+          rounded={30}/>
+      </View>
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
               <Center>
                   {/* <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}> */}
                   <HStack justifyContent="center" style={styles.navigationBarItems}>
                       <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
-                      <Box size="lg" width="70%" rounded="sm" height="10" text={{
+                      <Spacer/>
+                      <Box size="lg" width="75%" rounded="sm" height="16" text={{
                           color: "white",
                           fontWeight: "medium"
-                        }} >
-                        <Heading color="white">  Explore</Heading>
-                        <Heading color="white">  Austin, TX</Heading>
+                      }} >
+                        <Heading color="white" size="xl">     Explore</Heading>
+                        <Spacer/>
+                        <Heading color="white" size="sm">        Austin, TX</Heading>
                       </Box>
                       {/* <Box alignSelf="center" bg="primary.500" height="16" _text={{
                       fontSize: "md",
@@ -329,13 +357,13 @@ export default function Homepage({ navigation }) {
         { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
       </View>
       <View style={styles.navigationBar}>
-        <Box width="100%" height="10%" bg="light.50" rounded="lg" p={8} style={styles.navigationBarComponent}>
+        <Box width="100%" height="10%" rounded="lg" p={8} style={styles.navigationBarComponent}>
             <Center>
                 <HStack justifyContent="center" style={styles.navigationBarItems}>
                     <IconButton width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} borderRadius="full" />
                     {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
                     <Spacer/>
-                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
+                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="filter" size="12" color="#F0635A" />} />
                     <Spacer/>
                     <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
                 </HStack>
@@ -398,6 +426,7 @@ const theme = extendTheme({
 
 const styles = StyleSheet.create({
   topBar: {
+    position: 'absolute',
     // position: 'center',
     // flex: 1,
     flexDirection: 'row',
@@ -407,13 +436,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "20%",
+    top: "10%",
     // top: 800,
   },
   topBarText: {
       top: "50%",
   },
   navigationBar: {
+    position: 'absolute',
     // position: 'center',
     // flex: 1,
     flexDirection: 'row',
@@ -423,8 +453,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "155%",
+    top: "87%",
     // top: 800,
+  },
+  backgroundBox: {
+    position: 'absolute',
+    justifyContent: 'space-evenly',
+    alignContent:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    top: "-5%",
   },
   background: {
     // flex: 1,
@@ -441,9 +479,10 @@ const styles = StyleSheet.create({
     top: "-5%",
   },
   appContainer: {
+    // position: 'absolute',
     flex: 1,
     borderColor: 'black',
-    backgroundColor: "#424242", 
+    // backgroundColor: "#424242", 
   },
   container: {
     flex: 1,
@@ -468,14 +507,7 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent'
   },
-//   navigationBarItems: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     backgroundColor: 'white',
-//   },
   filterModal: {
-    // flex: 1,
-    // top: "200%",
   },
   navigationBarComponent: {
     // position: 'center',

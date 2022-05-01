@@ -1,44 +1,30 @@
 import React, { Component, useState, useEffect } from 'react'
 import Swiper from 'react-native-deck-swiper'
 // import { StyleSheet, View } from 'react-native'
-import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // import TopBar from '../components/topbar.js'
 import Navbar from '../components/navbar.js'
 import Cards from '../components/cards'
-import { VStack, Center, useTheme, Heading, NativeBaseProvider, Button, Box, Divider } from "native-base";
+import { VStack, HStack, Center, useTheme, 
+          Heading, NativeBaseProvider, Button, 
+          Box, Divider, IconButton, Icon, Spacer 
+        } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { db } from '../firebaseConfig/firebase';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import SavedCards from '../components/savedCards.js';
 import { useFonts } from 'expo-font';
 import Public_Sans_font from '../assets/PublicSans-Light.ttf';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
-export default function Favorite() {
-    // const [cardInfo, setCardInfo] = useState(["This", "Should", "Be", "The", "Favorites", "Page"]);
+export default function Favorite({navigation}) {
     const [allFilters, setAllFilters] = useState([]);
     const [cardInfo, setCardInfo] = useState([]);
-
-    // const [loaded] = useFonts({
-    //   Public_Sans: require('../assets/PublicSans-Light.ttf'),
-    // });
-
-    // if (!loaded) {
-    //   return null;
-    // }
-
-    // const styles = StyleSheet.create({
-    //   baseText: {
-    //     fontFamily: "Roboto"
-    //   },
-    //   titleText: {
-    //     fontSize: 20,
-    //     fontWeight: "bold"
-    //   }
-    // });
 
     useEffect(async () => {
       const getEventData = async () => {
@@ -47,39 +33,41 @@ export default function Favorite() {
           const events = []; // let
           docSnap.forEach((doc)=>{
             events.push({ ...doc.data(), id:doc.id})
-            // if(((eventTypeFilter.length === 0) || (eventTypeFilter.indexOf(doc.data().Type !== -1))) &&
-            // ((dayTypeFilter.length === 0) || (dayTypeFilter.indexOf(doc.data().DayOfWeek !== -1)))) {
-            //   events.push({ ...doc.data(), id:doc.id})
-            // }
           });
           setCardInfo([...events]);
           console.log({cardInfo});
           console.log("Document data:", events);
           console.log("in favorite page");
-          // console.log("All Filter Data", allFilters);
-          // console.log("Event Type Filter", eventTypeFilter);
-          // console.log("Day Type Filter", dayTypeFilter);
         });
       };
       getEventData();
     },[allFilters]);
 
-    const savedCardInfo = cardInfo.map((cardData) =>
-    <SavedCards information={cardData}/>);
+    const config = {
+      dependencies: {
+        "linear-gradient": LinearGradient
+      }
+    };
 
     return (
-        // <NativeBaseProvider>
-        //     <View style={styles.swipeContainer}>
-        //         <Cards information={cardInfo}/>
-        //     </View>
-        // </NativeBaseProvider>
-        <NativeBaseProvider>
+        <NativeBaseProvider config={config}>
           <SafeAreaView style={styles.container}>
+            <View style={styles.backgroundBox}>
+              <Box 
+                height="751" 
+                width="425" 
+                bg={{
+                  linearGradient: {
+                    colors: ["rose.700", "rose.50"],
+                    start: [.5, .1],
+                    end: [1, 1],
+                  },
+                }}
+                rounded={30}/>
+            </View>
             <ScrollView style={styles.scrollView}>
-              {/* {savedCardInfo} */}
               <VStack spacing={5}>
                   {cardInfo.map((cardData) => (
-                    // <SavedCards information = {cardData}/>
                     <Box border="1" borderRadius="md" bg="light.50" m="5">
                       <VStack space="4" > 
                         <Box px="4" pt="4">
@@ -95,8 +83,21 @@ export default function Favorite() {
                     </Box>
                   ))}
               </VStack>
-              
             </ScrollView>
+            <View style={styles.navigationBar}>
+              <Box width="100%" height="10%" rounded="lg" p={8} style={styles.navigationBarComponent}>
+                  <Center>
+                      <HStack justifyContent="center" style={styles.navigationBarItems}>
+                          <IconButton width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="#F0635A" />} borderRadius="full" />
+                          {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
+                          <Spacer/>
+                          <IconButton width="16" height="16" onPress={() => navigation.navigate('Feed')} icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
+                          <Spacer/>
+                          <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
+                      </HStack>
+                  </Center>
+              </Box>
+            </View>
           </SafeAreaView>
         </NativeBaseProvider>
     )
@@ -117,9 +118,18 @@ const styles = StyleSheet.create({
       top: "20%",
       // top: 800,
     },
+    backgroundBox: {
+      position: 'absolute',
+      justifyContent: 'space-evenly',
+      alignContent:'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      top: "-5%",
+    },
     navigationBar: {
+      position: 'absolute',
       // position: 'center',
-      flex: 1,
+      // flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       alignContent:'center',
@@ -127,9 +137,22 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginHorizontal: 20,
       maxHeight: 80,
-      top: "155%",
+      top: "92%",
       // top: 800,
     },
+    navigationBarComponent: {
+      // position: 'center',
+      flex: 1,
+      borderRadius: 30,
+      flexDirection: 'column',
+      // justifyContent: 'space-evenly',
+      // alignContent:'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      marginHorizontal: 20,
+      // height: 80,
+      // top: 800,
+  },
     background: {
       // flex: 1,
       borderRadius: 4,
@@ -151,7 +174,7 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1,
-      backgroundColor: '#424242'
+      // backgroundColor: '#424242'
     },
     card: {
       flex: 1,
@@ -173,9 +196,16 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent'
     },
     navigationBarItems: {
-      flex: 1,
+      // position: 'center',
+      // flex: 1,
       flexDirection: 'row',
-      backgroundColor: 'white',
+      justifyContent: 'space-evenly',
+      alignContent:'center',
+      alignItems: 'center',
+      // alignSelf: 'center',
+      // marginHorizontal: 20,
+      // height: 80,
+      // top: 800,
     },
     filterModal: {
       flex: 1,
