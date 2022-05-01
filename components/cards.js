@@ -25,10 +25,9 @@ export default function Cards( { information }) {
         <Swiper
             cards={information}
             renderCard={(card) => {
-              // console.log("Information In card.js", information)
                 return (
                     <View style={styles.card}>
-                      {/* <Image source={require({card.picPath})} */}
+                      <Image source={require({card.Picture})} />
                       <View style={styles.cardInformation}>
                         <VStack space="2" mt="4" px="4">
                           <Text style={{fontSize: 22, fontFamily: 'Kailasa-Bold'}}>{card.Organizer} | {card.Title}</Text>
