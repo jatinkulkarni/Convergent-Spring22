@@ -172,7 +172,7 @@ export default function Homepage({ navigation }) {
     <View style={styles.appContainer}>
       <View style={styles.backgroundBox}>
         <Box 
-          height="751" 
+          height="900" 
           width="425" 
           bg={{
             linearGradient: {
@@ -356,20 +356,6 @@ export default function Homepage({ navigation }) {
       <View style={styles.swipeContainer}>
         { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
       </View>
-      <View style={styles.navigationBar}>
-        <Box width="100%" height="10%" rounded="lg" p={8} style={styles.navigationBarComponent}>
-            <Center>
-                <HStack justifyContent="center" style={styles.navigationBarItems}>
-                    <IconButton width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} borderRadius="full" />
-                    {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
-                    <Spacer/>
-                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="filter" size="12" color="#F0635A" />} />
-                    <Spacer/>
-                    <IconButton width="16" height="16" icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
-                </HStack>
-            </Center>
-        </Box>
-      </View>
     </View>
     </NativeBaseProvider>
   );
@@ -436,7 +422,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "10%",
+    top: "20%",
     // top: 800,
   },
   topBarText: {
@@ -476,7 +462,7 @@ const styles = StyleSheet.create({
   },
   swipeContainer: {
     position: 'absolute',
-    top: "-5%",
+    top: "5%",
   },
   appContainer: {
     // position: 'absolute',
