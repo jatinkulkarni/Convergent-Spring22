@@ -6,7 +6,7 @@ import NativeVibration from "react-native/Libraries/Vibration/NativeVibration";
 
 export default function NavBar() {
     return(
-        <Box width="100%" height="20%" bg="transparent" rounded="lg" p={8} style={styles.navigationBar}>
+       // <Box width="100%" height="-75%" bg="white" rounded="lg" p={8} style={styles.navigationBar}>
             <Center>
                 <HStack justifyContent="center" style={styles.navigationBarItems}>
                     <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} />
@@ -14,7 +14,7 @@ export default function NavBar() {
                     <IconButton icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
                 </HStack>
             </Center>
-        </Box>
+       // </Box>
     );
 }
 
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         marginHorizontal: 20,
-         //height: 80,
-        top: 100,
+        //height: 0,
+      //  top: "-2%",
     },
     navigationBarItems: {
         // position: 'center',
@@ -39,9 +39,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignContent:'center',
         alignItems: 'center',
+        marginBottom: "90%",
         // alignSelf: 'center',
         // marginHorizontal: 20,
-        // height: 80,
+       // height: "90%",
+       
         // top: 800,
       },
 });
