@@ -59,8 +59,10 @@ export default function Cards( { information }) {
                       <Image
                         style={styles.cardPhoto}
                         // source={require('../assets/photos/Convergent.png')}
-                        source={require('../assets/photos/Shawn-Mendes.jpeg')}
+                        // source={require('../assets/photos/Shawn-Mendes.jpeg')}
                         // source={card.Picture}
+                        // source={require(card.Picture)}
+                        source={{uri: card.photoURL}}
                       />
                       <View style={styles.cardInformation}>
                         <VStack space="2" mt="4" px="4">
