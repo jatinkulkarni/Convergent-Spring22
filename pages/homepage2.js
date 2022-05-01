@@ -4,6 +4,7 @@ import { StyleSheet, View, Modal, Text, Pressable, ScrollView } from 'react-nati
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialIcons } from "@expo/vector-icons";
+import { LinearGradient } from 'expo-linear-gradient';
 
 // import TopBar from '../components/topbar.js'
 import Navbar from '../components/navbar.js'
@@ -58,7 +59,7 @@ export default function Homepage({ navigation }) {
           }
         });
         setCardInfo([...events]);
-        console.log("Document data:", events);
+        // console.log("Document data:", events);
     });
   };
 
@@ -114,8 +115,8 @@ export default function Homepage({ navigation }) {
 
       setTimeOfDayFilter([...timeTypeFilters]);
 
-      musicFilterSelected ? console.log("this") : console.log("that");
-      console.log("eventFilters = ", eventFilters);
+      // musicFilterSelected ? console.log("this") : console.log("that");
+      // console.log("eventFilters = ", eventFilters);
     //   setEventTypeFilter([musicFilterSelected]);
     //   setEventTypeFilter([...sportsFilterSelected]);
     //   setEventTypeFilter([...setFoodFilterSelected]);
@@ -129,8 +130,8 @@ export default function Homepage({ navigation }) {
     //   setDayTypeFilter([...saturdayFilter]);
     //   setDayTypeFilter([...sundayFilter]);
 
-      console.log("event type filter" , eventTypeFilter);
-      console.log("day type filter", dayTypeFilter);
+      // console.log("event type filter" , eventTypeFilter);
+      // console.log("day type filter", dayTypeFilter);
   }
   
   useEffect(async () => {
@@ -144,7 +145,7 @@ export default function Homepage({ navigation }) {
           }
         });
         setCardInfo([...events]);
-        console.log("Document data:", events);
+        // console.log("Document data:", events);
         // console.log("All Filter Data", allFilters);
         // console.log("Event Type Filter", eventTypeFilter);
         // console.log("Day Type Filter", dayTypeFilter);
@@ -153,31 +154,62 @@ export default function Homepage({ navigation }) {
     getEventData();
   },[allFilters]);
 
+  // const config = {
+  //   dependencies: {
+  //     "linear-gradient": require("react-native-linear-gradient").default,
+  //   },
+  // };
+
+  const config = {
+    dependencies: {
+      "linear-gradient": LinearGradient
+    }
+  };
+
   // console.log(usersCollection)
   return (
-    <NativeBaseProvider theme={theme}>
+    <NativeBaseProvider config={config} theme={theme}>
     <View style={styles.appContainer}>
-      <View style={styles.swipeContainer}>
-        { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
+      <View style={styles.backgroundBox}>
+        <Box 
+          height="900" 
+          width="425" 
+          bg={{
+            linearGradient: {
+              colors: ["rose.700", "rose.50"],
+              start: [.5, .1],
+              end: [1, 1],
+            },
+          }}
+          rounded={30}/>
       </View>
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
               <Center>
-                  <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}>
-                      <IconButton  width="16" height="16" onPress={() => navigation.navigate('Favorite')} icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
-                      <Box size="lg" width="70%" rounded="sm" _text={{
+                  {/* <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}> */}
+                  <HStack justifyContent="center" style={styles.navigationBarItems}>
+                      <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
+                      <Spacer/>
+                      <Box size="lg" width="75%" rounded="sm" height="16" text={{
                           color: "white",
                           fontWeight: "medium"
-                        }} >
-                        <Heading color="white">Explore</Heading>
-                        Austin, TX
+                      }} >
+                        <Heading color="white" size="xl">     Explore</Heading>
+                        <Spacer/>
+                        <Heading color="white" size="sm">        Austin, TX</Heading>
                       </Box>
-                      {/* <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setShowModal(true)}>
-                          <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
-                      </Button> */}
+                      {/* <Box alignSelf="center" bg="primary.500" height="16" _text={{
+                      fontSize: "md",
+                      fontWeight: "medium",
+                      color: "warmGray.50",
+                      letterSpacing: "lg"
+                    }}>
+                        This is a Box
+                      </Box> */}
                       <Button colorScheme="light" variant="boxyButton" width="16" height="16" borderRadius={15} onPress={() => setModalVisible(true)}>
                           <Icon as={Ionicons} name="filter-sharp" size="10" color="muted.500" />
                       </Button>
+                  </HStack>
                       <Modal
                         animationType="slide"
                         transparent={true}
@@ -317,55 +349,12 @@ export default function Homepage({ navigation }) {
                         </View>
                         </View>
                     </Modal>
-                      {/* <Modal isOpen={showModal} onClose={() => setShowModal(false)} style={styles.filterModal}>
-                        <Modal.Content maxWidth="400px" height="450px" colorScheme="orange" variant="newDefault">
-                          <Modal.CloseButton />
-                          <Modal.Header>Filters</Modal.Header>
-                          <Modal.Body>
-                            <Heading fontSize="md">Event Type:</Heading>
-                            <Checkbox.Group onChange={setEventTypeFilter} value={eventTypeFilter}>
-                              <Checkbox value="Music">Music</Checkbox>
-                              <Checkbox value="Sports">Sports</Checkbox>
-                              <Checkbox value="Food">Food</Checkbox>
-                              <Checkbox value="Art">Art</Checkbox>
-                            </Checkbox.Group>
-                            
-
-                            <Divider my={4}/>
-
-                            <Heading fontSize="md">Day of the Week:</Heading>
-                            <Checkbox.Group onChange={setDayTypeFilter} value={dayTypeFilter}>
-                              <Checkbox value="Monday">Monday</Checkbox>
-                              <Checkbox value="Tuesday">Tuesday</Checkbox>
-                              <Checkbox value="Wednesday">Wednesday</Checkbox>
-                              <Checkbox value="Thursday">Thursday</Checkbox>
-                              <Checkbox value="Friday">Friday</Checkbox>
-                              <Checkbox value="Saturday">Saturday</Checkbox>
-                              <Checkbox value="Sunday">Sunday</Checkbox>
-                            </Checkbox.Group>
-
-                            <Divider my={4}/>
-
-                            <Button onPress={() => setAllFilters([...allFilters])} value ={allFilters}>Check Filter</Button>
-
-                          </Modal.Body>
-                        </Modal.Content>
-                      </Modal> */}
-                  </Stack>
+                  {/* </Stack> */}
               </Center>
           </Box>
       </View>
-      <View style={styles.navigationBar}>
-        <Box width="100%" height="10%" bg="light.50" rounded="lg" p={8} style={styles.navigationBarComponent}>
-            <Center>
-                <HStack justifyContent="center" style={styles.navigationBarItems}>
-                    <IconButton onPress={() => navigation.navigate('Favorite')} icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} />
-                    {/* <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="12" color="light.400" />} /> */}
-                    <IconButton icon={<Icon as={MaterialIcons} name="filter" size="12" color="light.400" />} />
-                    <IconButton icon={<Icon as={MaterialIcons} name="person" size="12" color="light.400" />} />
-                </HStack>
-            </Center>
-        </Box>
+      <View style={styles.swipeContainer}>
+        { cardInfo.length != 0 ? <Cards information={cardInfo}/> : null }
       </View>
     </View>
     </NativeBaseProvider>
@@ -423,6 +412,7 @@ const theme = extendTheme({
 
 const styles = StyleSheet.create({
   topBar: {
+    position: 'absolute',
     // position: 'center',
     // flex: 1,
     flexDirection: 'row',
@@ -439,6 +429,7 @@ const styles = StyleSheet.create({
       top: "50%",
   },
   navigationBar: {
+    position: 'absolute',
     // position: 'center',
     // flex: 1,
     flexDirection: 'row',
@@ -448,8 +439,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "155%",
+    top: "87%",
     // top: 800,
+  },
+  backgroundBox: {
+    position: 'absolute',
+    justifyContent: 'space-evenly',
+    alignContent:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    top: "-5%",
   },
   background: {
     // flex: 1,
@@ -463,12 +462,13 @@ const styles = StyleSheet.create({
   },
   swipeContainer: {
     position: 'absolute',
-    top: "-5%",
+    top: "5%",
   },
   appContainer: {
+    // position: 'absolute',
     flex: 1,
     borderColor: 'black',
-    backgroundColor: "#424242", 
+    // backgroundColor: "#424242", 
   },
   container: {
     flex: 1,
@@ -493,14 +493,7 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent'
   },
-//   navigationBarItems: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     backgroundColor: 'white',
-//   },
   filterModal: {
-    // flex: 1,
-    // top: "200%",
   },
   navigationBarComponent: {
     // position: 'center',
@@ -517,7 +510,7 @@ const styles = StyleSheet.create({
 },
 navigationBarItems: {
     // position: 'center',
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignContent:'center',

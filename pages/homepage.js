@@ -20,7 +20,7 @@ function getData () {
     docSnap.forEach((doc)=>{
       events.push({ ...doc.data(), id:doc.id})
     });
-    console.log("Document data:", events);
+    // console.log("Document data:", events);
 
   });
 };
