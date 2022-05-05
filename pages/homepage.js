@@ -82,7 +82,7 @@ class Exemple extends Component {
           stackSeparation={15}
           overlayLabels={{
             bottom: {
-              title: 'BLEAH',
+              title: 'MAYBE',
               style: {
                 label: {
                   backgroundColor: 'black',

@@ -66,7 +66,8 @@ export default function Cards( { information }) {
                       />
                       <View style={styles.cardInformation}>
                         <VStack space="2" mt="4" px="4">
-                          <Text style={{fontSize: 22, fontFamily: 'Kailasa-Bold'}}>{card.Organizer} | {card.Title}</Text>
+                          {/* <Text style={{fontSize: 22, fontFamily: 'Kailasa-Bold'}}>{card.Organizer} | {card.Title}</Text> */}
+                          <Text style={{fontSize: 22, fontFamily: 'Kailasa-Bold'}}>{card.Title}</Text>
                           <Stack direction="row" mb="1.5" mt="1" space={3}>
                             <Icon as={Ionicons} name="calendar-outline" size="5" color="red.500" />
                             <Text style={{fontSize: 12, fontFamily: 'Kailasa'}}>{card.DayOfWeek}</Text>
@@ -91,7 +92,7 @@ export default function Cards( { information }) {
             stackSize= {5}
             overlayLabels={{
                 bottom: {
-                  title: 'BLEAH',
+                  title: 'MAYBE',
                   style: {
                     label: {
                       backgroundColor: 'black',
