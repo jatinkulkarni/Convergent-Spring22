@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import Swiper from 'react-native-deck-swiper'
-import { StyleSheet, View, Modal, Text, Pressable, ScrollView } from 'react-native'
+import { StyleSheet, View, Modal, Text, Pressable, ScrollView, Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialIcons } from "@expo/vector-icons";
@@ -18,6 +18,7 @@ import {
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { db } from '../firebaseConfig/firebase';
 import { collection, doc, getDocs } from 'firebase/firestore';
+import Logo from '../assets/photos/gemz-white.png';
 
 
 
@@ -183,20 +184,21 @@ export default function Homepage({ navigation }) {
           }}
           rounded={30}/>
       </View>
+      <Image style={styles.logo} source={Logo}/>
       <View style={styles.topBar}>
         <Box width="100%" height="10%"  rounded="lg" p={8} >
               <Center>
                   {/* <Stack direction="row" mb="2.5" space={2} style={styles.navigationBarItems}> */}
                   <HStack justifyContent="center" style={styles.navigationBarItems}>
-                      <IconButton  width="16" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
+                      <IconButton  width="14" height="16" icon={<Icon as={Ionicons} name="pin-sharp" size="12" color="muted.50" />} />
                       <Spacer/>
                       <Box size="lg" width="75%" rounded="sm" height="16" text={{
                           color: "white",
                           fontWeight: "medium"
                       }} >
-                        <Heading color="white" size="xl">     Explore</Heading>
+                        <Heading color="white" size="xl">   Explore</Heading>
                         <Spacer/>
-                        <Heading color="white" size="sm">        Austin, TX</Heading>
+                        <Heading color="white" size="sm">      Austin, TX</Heading>
                       </Box>
                       {/* <Box alignSelf="center" bg="primary.500" height="16" _text={{
                       fontSize: "md",
@@ -420,13 +422,20 @@ const styles = StyleSheet.create({
     alignContent:'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: 0,
     maxHeight: 80,
-    top: "15%",
+    top: "20%",
     // top: 800,
   },
   topBarText: {
       top: "50%",
+  },
+  logo: {
+    position: 'absolute',
+    top: "8%",
+    alignSelf: 'center',
+    height: "7.75%",
+    width: "15%"
   },
   navigationBar: {
     position: 'absolute',
@@ -462,7 +471,7 @@ const styles = StyleSheet.create({
   },
   swipeContainer: {
     position: 'absolute',
-    top: "0%",
+    top: "3%",
   },
   appContainer: {
     // position: 'absolute',
