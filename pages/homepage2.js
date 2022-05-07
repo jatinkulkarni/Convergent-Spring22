@@ -176,9 +176,9 @@ export default function Homepage({ navigation }) {
           width="425" 
           bg={{
             linearGradient: {
-              colors: ["rose.700", "rose.50"],
-              start: [.5, .1],
-              end: [1, 1],
+              colors: ["#F0635A", "#FCDFDE"],
+              start: [.5, .5],
+              end: [.5, .9],
             },
           }}
           rounded={30}/>
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 20,
     maxHeight: 80,
-    top: "20%",
+    top: "15%",
     // top: 800,
   },
   topBarText: {
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
   },
   swipeContainer: {
     position: 'absolute',
-    top: "5%",
+    top: "0%",
   },
   appContainer: {
     // position: 'absolute',

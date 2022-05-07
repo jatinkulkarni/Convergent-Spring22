@@ -58,9 +58,9 @@ export default function Favorite({navigation}) {
                 width="425" 
                 bg={{
                   linearGradient: {
-                    colors: ["rose.700", "rose.50"],
-                    start: [.5, .1],
-                    end: [1, 1],
+                    colors: ["#F0635A", "#FCDFDE"],
+                    start: [.5, .5],
+                    end: [.5, .9],
                   },
                 }}
                 rounded={30}/>
