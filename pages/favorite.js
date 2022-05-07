@@ -32,7 +32,9 @@ export default function Favorite({navigation}) {
           setCardInfo([]);
           const events = []; // let
           docSnap.forEach((doc)=>{
-            events.push({ ...doc.data(), id:doc.id})
+            if (doc.data().Saved == true) {
+              events.push({ ...doc.data(), id:doc.id})
+            }
           });
           setCardInfo([...events]);
           console.log({cardInfo});
