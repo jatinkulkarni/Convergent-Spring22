@@ -1,6 +1,6 @@
 # Gemz
 
-**Gemz** is a location-based social media application developed in Spring 2022. The app connects users with local events in Austin, Texas, offering a personalized experience through AI-driven event recommendations and group matchmaking. Users can swipe through events, similar to popular dating apps, and be matched with groups of individuals who share similar interests. 
+**Gemz** is a location-based social media application developed in Spring 2022. The app connects users with local events in Austin, Texas, offering a personalized experience through AI-driven event recommendations and group matchmaking. Users can swipe through events, similar to popular dating apps, and be matched with groups of individuals who share similar interests.
 
 The project was built using **Python**, **React Native**, **JavaScript**, **CSS**, **HTML**, and **Firebase**, making it a dynamic and scalable application for real-time event discovery and social engagement.
 
@@ -22,7 +22,7 @@ The project was built using **Python**, **React Native**, **JavaScript**, **CSS*
 
 ## Installation
 
-To set up the project locally, follow the steps below:
+To set up the project locally, follow the steps below.
 
 ### Prerequisites
 
